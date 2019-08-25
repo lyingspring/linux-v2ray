@@ -1,0 +1,179 @@
+{
+	"log": {
+		"loglevel": "warning",
+		"access": "",
+		"error": ""
+	},
+	"inbounds": [{
+			"port": 1080,
+			"protocol": "socks",
+			"sniffing": {
+				"enabled": true,
+				"destOverride": ["http", "tls"]
+			},
+			"settings": {
+				"auth": "noauth",
+				"udp": true
+			}
+		}, {
+			"domainOverride": ["tls", "http"],
+			"port": 2000,
+			"protocol": "dokodemo-door",
+			"settings": {
+				"network": "tcp,udp",
+				"followRedirect": true
+			}
+		}, {
+			"port": 53,
+			"tag": "dns-in",
+			"protocol": "dokodemo-door",
+			"settings": {
+				"address": "192.168.9.1",
+				"port": 53,
+				"network": "tcp,udp"
+			}
+		}
+	],
+	"outbounds": [{
+			"tag": "agentout",
+			"protocol": "vmess",
+			"settings": {
+				"vnext": [{
+						"address": "192.168.1.1",
+						"port": 443,
+						"users": [{
+								"id": "652c6c9e-ba82-423d-a099-6666fa0be3fd",
+								"alterId": 233,
+								"email": "t@t.tt",
+								"security": "auto"
+							}
+						]
+					}
+				],
+				"servers": null
+			},
+			"streamSettings": {
+				"network": "tcp",
+				"security": "",
+				"sockopt": {
+					"mark": 255
+				},
+				"tlsSettings": null,
+				"tcpSettings": {
+					"connectionReuse": true,
+					"header": {
+						"type": "http",
+						"request": {
+							"version": "1.1",
+							"method": "GET",
+							"path": [
+								"/"
+							],
+							"headers": {
+								"Host": [
+									"www.baidu.com"
+								],
+								"User-Agent": [
+									"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.75 Safari/537.36",
+									"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/53.0.2785.109 Mobile/14A456 Safari/601.1.46"
+								],
+								"Accept-Encoding": [
+									"gzip, deflate"
+								],
+								"Connection": [
+									"keep-alive"
+								],
+								"Pragma": "no-cache"
+							}
+						},
+						"response": {
+							"version": "1.1",
+							"status": "200",
+							"reason": "OK",
+							"headers": {
+								"Content-Type": [
+									"application/octet-stream",
+									"video/mpeg"
+								],
+								"Transfer-Encoding": [
+									"chunked"
+								],
+								"Connection": [
+									"keep-alive"
+								],
+								"Pragma": "no-cache"
+							}
+						}
+					}
+				},
+				"kcpSettings": null,
+				"wsSettings": null,
+				"httpSettings": null
+			},
+			"mux": {
+				"enabled": false
+			}
+		}, {
+			"protocol": "freedom",
+			"settings": {},
+			"tag": "direct",
+			"streamSettings": {
+				"sockopt": {
+					"mark": 255
+				}
+			}
+		}, {
+			"protocol": "dns",
+			"tag": "dns-out",
+			"streamSettings": {
+				"sockopt": {
+					"mark": 255
+				}
+			}
+		}
+	],
+	"routing": {
+		"domainStrategy": "IPOnDemand",
+		"rules": [{
+				"type": "field",
+				"inboundTag": ["dns-in"],
+				"outboundTag": "dns-out"
+			}, {
+				"type": "field",
+				"outboundTag": "direct",
+				"domain": ["geosite:cn"]
+			}, {
+				"type": "field",
+				"outboundTag": "direct",
+				"ip": [
+					"geoip:cn",
+					"geoip:private"
+				]
+			}, {
+				"type": "field",
+				"outboundTag": "direct",
+				"ip": [
+					"114.114.114.114"
+				]
+			}
+
+		],
+		"strategy": "rules"
+	},
+	"dns": {
+		"hosts": {
+			"domain:www.maoxj.com": "2.2.3.4"
+		},
+		"servers": [{
+				"address": "114.114.114.114",
+				"port": 53,
+				"domains": ["geosite:cn"]
+			},
+			"8.8.8.8",
+			"localhost"
+		],
+		"clientIp": "112.10.255.65",
+		"tag": "dns_inbound"
+	}
+}
+

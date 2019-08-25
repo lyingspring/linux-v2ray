@@ -1,0 +1,144 @@
+{
+    "outbounds": [
+        {
+            "streamSettings": {
+                "httpSettings": null, 
+                "kcpSettings": null, 
+                "wsSettings": null, 
+                "sockopt": {
+                    "mark": 255
+                }, 
+                "tlsSettings": null, 
+                "security": ""
+            }, 
+            "tag": "agentout", 
+            "protocol": "shadowsocks", 
+            "settings": {
+                "servers": [
+                    {
+                        "port": 18804, 
+                        "password": "ay3o8M", 
+                        "method": "chacha20", 
+                        "address": "cmi-b.liangchencloud.xyz"
+                    }
+                ]
+            }
+        }, 
+        {
+            "streamSettings": {
+                "sockopt": {
+                    "mark": 255
+                }
+            }, 
+            "tag": "direct", 
+            "protocol": "freedom", 
+            "settings": {}
+        }, 
+        {
+            "streamSettings": {
+                "sockopt": {
+                    "mark": 255
+                }
+            }, 
+            "tag": "dns-out", 
+            "protocol": "dns"
+        }
+    ], 
+    "dns": {
+        "clientIp": "112.10.255.65", 
+        "tag": "dns_inbound", 
+        "hosts": {
+            "domain:www.maoxj.com": "2.2.3.4"
+        }, 
+        "servers": [
+            {
+                "domains": [
+                    "geosite:cn"
+                ], 
+                "port": 53, 
+                "address": "114.114.114.114"
+            }, 
+            "8.8.8.8", 
+            "localhost"
+        ]
+    }, 
+    "log": {
+        "loglevel": "warning", 
+        "access": "", 
+        "error": ""
+    }, 
+    "inbounds": [
+        {
+            "sniffing": {
+                "destOverride": [
+                    "http", 
+                    "tls"
+                ], 
+                "enabled": true
+            }, 
+            "protocol": "socks", 
+            "port": 1080, 
+            "settings": {
+                "udp": true, 
+                "auth": "noauth"
+            }
+        }, 
+        {
+            "domainOverride": [
+                "tls", 
+                "http"
+            ], 
+            "protocol": "dokodemo-door", 
+            "port": 2000, 
+            "settings": {
+                "network": "tcp,udp", 
+                "followRedirect": true
+            }
+        }, 
+        {
+            "tag": "dns-in", 
+            "protocol": "dokodemo-door", 
+            "port": 53, 
+            "settings": {
+                "network": "tcp,udp", 
+                "port": 53, 
+                "address": "192.168.9.1"
+            }
+        }
+    ], 
+    "routing": {
+        "rules": [
+            {
+                "inboundTag": [
+                    "dns-in"
+                ], 
+                "type": "field", 
+                "outboundTag": "dns-out"
+            }, 
+            {
+                "domain": [
+                    "geosite:cn"
+                ], 
+                "type": "field", 
+                "outboundTag": "direct"
+            }, 
+            {
+                "ip": [
+                    "geoip:cn", 
+                    "geoip:private"
+                ], 
+                "type": "field", 
+                "outboundTag": "direct"
+            }, 
+            {
+                "ip": [
+                    "114.114.114.114"
+                ], 
+                "type": "field", 
+                "outboundTag": "direct"
+            }
+        ], 
+        "domainStrategy": "IPOnDemand", 
+        "strategy": "rules"
+    }
+}

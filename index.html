@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>v2ray-config</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit" />
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="icon" type="image/png" href="assets/i/favicon.png" />
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png" />
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png" />
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png" />
+    <meta name="msapplication-TileColor" content="#0e90d2" />
+    <link rel="stylesheet" href="assets/css/amazeui.min.css" />
+    <link rel="stylesheet" href="assets/css/app.css" />
+  </head>
+  <body>
+  <!--在这里编写你的代码-->
+  <header data-am-widget="header" class="am-header am-header-default">
+    <div class="am-header-left am-header-nav">
+      <a href="#left-link" class=""></a>
+    </div>
+    <h1 class="am-header-title">
+      <a href="#title-link" class="">v2ray配置信息修改</a>
+    </h1>
+  </header>
+  <form>
+    <div class="am-tabs" data-am-tabs="">
+      <ul class="am-tabs-nav am-nav am-nav-tabs">
+        <li class="am-active">
+          <a href="#tab1">v2ray配置手动修改</a>
+        </li>
+        <li>
+          <a href="#tab2">订阅</a>
+        </li>
+        <li>
+          <a href="#tab3">预留</a>
+        </li>
+      </ul>
+      <div class="am-tabs-bd">
+        <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+          <textarea id="msg" name="msg" placeholder="json格式" rows="17" cols="120"></textarea>
+          <br />
+          <br />
+		  <button type="button" class="am-btn am-btn-primary"  onclick="save()">启用</button>
+		  <button type="button" class="am-btn am-btn-primary"  onclick="querydefult()">查询默认配置</button>
+		   <hr />
+		  <div class="am-input-group am-input-group-primary">
+          <span class="am-input-group-btn">
+            <button class="am-btn am-btn-primary" type="button" id="addconf"><span class="am-icon-play"></span></button>
+          </span> 
+          <input type="text" class="am-form-field" placeholder="自定义配置名称" id="myconfig" /></div>
+          <div class="widget-head am-cf">
+           
+            <hr />
+          </div>
+          <div class="am-u-sm-12">
+            <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black" id="example-p">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>配置名称</th>
+                  <th>配置信息</th>
+                  <th>操作</th>
+				  <th>操作2</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- more data -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="am-tab-panel am-fade" id="tab2">
+          <div class="am-input-group am-input-group-primary">
+          <span class="am-input-group-btn">
+            <button class="am-btn am-btn-primary" type="button" id="addurlbtn"><span class="am-icon-rss"></span></button>
+          </span> 
+          <input type="text" class="am-form-field" placeholder="添加订阅URL" id="subsurl" /></div>
+          <div class="widget-head am-cf">
+            <div class="widget-title am-cf">----------------------------------------------------订阅列表</div>
+            <hr />
+          </div>
+          <div class="am-u-sm-12">
+            <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black" id="example-t">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>订阅名称</th>
+                  <th>订阅URL</th>
+                  <th>操作</th>
+				  <th>操作2</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- more data -->
+              </tbody>
+            </table>
+          </div>
+        
+        <div class="widget-head am-cf">
+          <div class="widget-title am-cf">----------------------------------------------------节点列表</div>
+          <hr />
+        </div>
+        <div class="am-u-sm-12">
+          <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black" id="example-r">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>节点名称</th>
+                <th>节点协议</th>
+                <th>倍率</th>
+                <th>主键</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- more data -->
+            </tbody>
+          </table>
+        </div>
+		
+        <button type="button" class="am-btn am-btn-primary" id="add">查看订阅列表</button>
+		</div>
+		<div class="am-tab-panel am-fade" id="tab3">
+      {
+    "inbounds": [
+        {
+            "protocol": "shadowsocks", 
+            "port": 1088, 
+            "settings": {
+                "ota": false, 
+                "level": 1, 
+                "password": "8932995", 
+                "method": "chacha20", 
+                "network": "tcp,udp"
+            }
+        }, 
+        {
+            "domainOverride": [
+                "tls", 
+                "http"
+            ], 
+            "protocol": "dokodemo-door", 
+            "port": 2000, 
+            "settings": {
+                "network": "tcp,udp", 
+                "followRedirect": true
+            }
+        }, 
+        {
+            "tag": "dns-in", 
+            "protocol": "dokodemo-door", 
+            "port": 53, 
+            "settings": {
+                "address": "192.168.9.1", 
+                "port": 53, 
+                "network": "tcp,udp"
+            }
+        }
+    ], 
+    "log": {
+        "loglevel": "warning", 
+        "access": "", 
+        "error": ""
+    }, 
+    "dns": {
+        "clientIp": "112.10.255.65", 
+        "tag": "dns_inbound", 
+        "hosts": {
+            "domain:www.maoxj.com": "2.2.3.4"
+        }, 
+        "servers": [
+            {
+                "domains": [
+                    "geosite:cn"
+                ], 
+                "port": 53, 
+                "address": "114.114.114.114"
+            }, 
+            "8.8.8.8", 
+            "localhost"
+        ]
+    }, 
+    "outbounds": [
+        {
+            "streamSettings": {
+                "httpSettings": null, 
+                "network": "kcp", 
+                "kcpSettings": {
+                    "uplinkCapacity": 12, 
+                    "downlinkCapacity": 100, 
+                    "readBufferSize": 2, 
+                    "mtu": 1350, 
+                    "header": {
+                        "request": null, 
+                        "type": "wechat-video", 
+                        "response": null
+                    }, 
+                    "tti": 50, 
+                    "congestion": false, 
+                    "writeBufferSize": 2
+                }, 
+                "wsSettings": null, 
+                "sockopt": {
+                    "mark": 255
+                }, 
+                "quicSettings": null, 
+                "tcpSettings": null, 
+                "tlsSettings": null, 
+                "security": ""
+            }, 
+            "tag": "proxy", 
+            "protocol": "vmess", 
+            "mux": {
+                "enabled": true
+            }, 
+            "settings": {
+                "vnext": [
+                    {
+                        "port": 443, 
+                        "users": [
+                            {
+                                "alterId": 233, 
+                                "security": "auto", 
+                                "id": "652c6c9e-ba82-423d-a099-9939fa0be3fd", 
+                                "email": "t@t.tt"
+                            }
+                        ], 
+                        "address": "159.65.5.131"
+                    }
+                ], 
+                "response": null, 
+                "servers": null
+            }
+        }, 
+        {
+            "streamSettings": {
+                "sockopt": {
+                    "mark": 255
+                }
+            }, 
+            "tag": "direct", 
+            "protocol": "freedom", 
+            "settings": {}
+        }, 
+        {
+            "streamSettings": {
+                "sockopt": {
+                    "mark": 255
+                }
+            }, 
+            "tag": "dns-out", 
+            "protocol": "dns"
+        }
+    ], 
+    "routing": {
+        "rules": [
+            {
+                "inboundTag": [
+                    "dns-in"
+                ], 
+                "type": "field", 
+                "outboundTag": "dns-out"
+            }, 
+            {
+                "domain": [
+                    "geosite:cn"
+                ], 
+                "type": "field", 
+                "outboundTag": "direct"
+            }, 
+            {
+                "ip": [
+                    "geoip:cn", 
+                    "geoip:private"
+                ], 
+                "type": "field", 
+                "outboundTag": "direct"
+            }, 
+            {
+                "ip": [
+                    "114.114.114.114"
+                ], 
+                "type": "field", 
+                "outboundTag": "direct"
+            }
+        ], 
+        "domainStrategy": "IPOnDemand", 
+        "strategy": "rules"
+    }
+}
+
+
+</div>
+      </div>
+      
+    </div>
+  </form>
+  <!--[if (gte IE 9)|!(IE)]><!-->
+  <script src="assets/js/jquery.min.js"></script> 
+  <!--<![endif]-->
+   
+  <!--[if lte IE 8 ]>
+<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+   
+  <script src="assets/js/amazeui.min.js"></script> 
+  <script src="assets/js/amazeui.datatables.min.js"></script> 
+  <script src="assets/js/dataTables.responsive.min.js"></script>
+  <script>
+$(document).ready(function() {
+    var t = $('#example-r').DataTable({
+    		"columnDefs": [{
+    				// 定义操作列,######以下是重点########
+    				"targets": 5, //操作按钮目标列
+    				"data": null,
+    				"render": function (data, type, row) {
+    					var id = '"' + row[0] + '"';
+    					var html = "<div class='tpl-table-black-operation'> <a href='javascript:;' onclick='clicktable(" + id + ")'><i class='am-icon-hand-pointer-o'></i> 启用</a></div>"
+    						return html;
+    				}
+    			}
+    		]
+    	});
+		
+		    var d = $('#example-t').DataTable({
+    		"columnDefs": [{
+    				// 定义操作列,######以下是重点########
+    				"targets": 3, //操作按钮目标列
+    				"data": null,
+    				"render": function (data, type, row) {
+    					var id = '"' + row[2] + '"';
+    					var html = "<div class='tpl-table-black-operation'> <a href='javascript:;' onclick='clicksubs(" + id + ")'><i class='am-icon-hand-pointer-o'></i> 更新</a></div>"
+    						return html;
+    				}
+    			},
+				{
+    				// 定义操作列,######以下是重点########
+    				"targets": 4, //操作按钮目标列
+    				"data": null,
+    				"render": function (data, type, row) {
+    					var id = '"' + row[2] + '"';
+    					var html = "<div class='tpl-table-black-operation'> <a href='javascript:;' onclick='delsubs(" + id + ")'><i class='am-icon-close'></i> 删除</a></div>"
+    						return html;
+    				}
+    			}
+    		]
+    	});
+		var c = $('#example-p').DataTable({
+    		"columnDefs": [{
+    				// 定义操作列,######以下是重点########
+    				"targets": 3, //操作按钮目标列
+    				"data": null,
+    				"render": function (data, type, row) {
+    					var id = '"' + row[0] + '"';
+    					var html = "<div class='tpl-table-black-operation'> <a href='javascript:;' onclick='catconf(" + id + ")'><i class='am-icon-hand-pointer-o'></i> 查看</a></div>"
+    						return html;
+    				}
+    			},
+				{
+    				// 定义操作列,######以下是重点########
+    				"targets": 4, //操作按钮目标列
+    				"data": null,
+    				"render": function (data, type, row) {
+    					var name = '"' + row[1] + '"';
+    					var html = "<div class='tpl-table-black-operation'> <a href='javascript:;' onclick='delconf(" + name + ")'><i class='am-icon-close'></i> 删除</a></div>"
+    						return html;
+    				}
+    			}
+    		]
+    	});
+		
+
+
+ 
+    $('#add').on( 'click', function () {
+		t.rows().clear();
+		ajax_method('/query_subs','','post',querysubssucc)
+       
+    } );
+	
+	$('#addurlbtn').on( 'click', function () {
+		console.log(window.btoa(encodeURI($('#subsurl').val())));
+		urldata=window.btoa(encodeURI($('#subsurl').val()))
+		ajax_method('/addsubsurl','urldata='+urldata,'post',addurlbtnsucc)
+       
+    } );
+	
+		$('#addconf').on( 'click', function () {
+		confna=window.btoa(encodeURI($('#myconfig').val()))
+		var msg=document.getElementById("msg");
+		//alert(msg.innerHTML);
+		//alert(msg.value);
+		msg=encodeURI(msg.value);//url编码
+		msg=window.btoa(msg);//base64编码
+		if(confirm("是否添加到自定义列表？")){
+		ajax_method('/save_conflist','conf='+msg+'&name='+confna,'post',delconfsubssucc);
+				//alert(msg+" !!!!!!!!!!!!!!!!!!"+confna);
+			}
+       
+    } );
+
+    // Automatically add a first row of data
+    $('#add').click();
+} );
+//点击启用之后操作
+ function clicktable(response){
+	 //console.log(response)
+	var t = $('#example-r').DataTable();
+	var rowdata=t.rows().data();
+	for(i=0;i<rowdata.length;i++){
+		if (rowdata[i][0]==response){
+			console.log(rowdata[i])
+			
+			ajax_method('/save_config_subs',"protocol="+rowdata[i][2]+"&idstr="+rowdata[i][4],'post',save_config_subssucc)
+		}
+	}
+	
+}
+
+//点击查看自定义配置
+ function catconf(response){
+	//alert(response);
+	var t = $('#example-p').DataTable();
+	var rowdata=t.rows().data();
+	for(i=0;i<rowdata.length;i++){
+		if (rowdata[i][0]==response){
+			console.log(rowdata[i]);
+				document.getElementById("msg").innerHTML = rowdata[i][2];
+				document.getElementById("msg").value=rowdata[i][2];
+			
+		}
+	}
+}
+//自定义信息删除
+function delconf(response){
+ajax_method('/delconf',"name="+window.btoa(encodeURI(response)),'post',delconfsubssucc)
+}
+function delconfsubssucc(response){
+//alert(1);
+ajax_method('/query_confList','','post',queryconflistsucc);
+}
+
+//点击更新订阅之后操作
+ function clicksubs(response){
+	ajax_method('/update_subs',"subsurl="+window.btoa(encodeURI(response)),'post',clicksubssucc)
+}
+//删除订阅URL
+function delsubs(response){
+	var t = $('#example-t').DataTable();
+	t.rows().clear().draw();
+	ajax_method('/delsubs',"subsurl="+window.btoa(encodeURI(response)),'post',delsubssucc)
+}
+function delsubssucc(response){
+	ajax_method('/querysubsurl','','post',addurlbtnsucc);
+}
+function clicksubssucc(response){
+	$('#add').click();
+}
+function save_config_subssucc(response){
+	alert(response);
+	ajax_method('/v2ray_config','','get',querysucc);
+}
+function addurlbtnsucc(response){
+	var subsurl=JSON.parse(response);
+	var t = $('#example-t').DataTable();
+	t.rows().clear();
+	var counter=1;
+		for(i=0;i<subsurl.length;i++){
+			 t.row.add( [
+            counter,
+			"无",
+            subsurl[i].url
+        ] ).draw( false );
+		counter++;
+		}
+	
+}
+function querysubssucc(response){
+	var subs=JSON.parse(response);
+	var t = $('#example-r').DataTable();
+	var counter=1;
+	if(subs.ss!=null){
+		for(i=0;i<subs.ss.length;i++){
+			 t.row.add( [
+            counter,
+            subs.ss[i].remarks,
+            "ss",
+			subs.ss[i].ratio,
+			subs.ss[i].id,
+			
+        ] ).draw( false );
+		counter++;
+		}
+	}
+		if(subs.v2!=null){
+		for(i=0;i<subs.v2.length;i++){
+			 t.row.add( [
+            counter,
+            subs.v2[i].ps,
+            "vmess",
+			"1",
+			subs.v2[i].add,
+			
+        ] ).draw( false );
+		counter++;
+		}
+	}
+}
+
+function queryconflistsucc(response){//查询自定义列表返回
+//console.log(response);
+	var ms=JSON.parse(response);
+	var t = $('#example-p').DataTable();
+	t.rows().clear().draw();
+	var counter=1;
+	if(ms.conflist!=null){
+		for(i=0;i<ms.conflist.length;i++){
+			 t.row.add( [
+            counter,
+            ms.conflist[i].name,
+			decodeURI(window.atob(ms.conflist[i].conf))
+        ] ).draw( false );
+		counter++;
+		}
+	}
+	t.column(2).visible(false)//将第三列的数据隐藏
+
+}
+
+window.onload = function()
+{ 
+	ajax_method('/v2ray_config','','get',querysucc)
+	ajax_method('/querysubsurl','','post',addurlbtnsucc)
+	ajax_method('/query_confList','','post',queryconflistsucc)
+}
+function querydefult(){
+ajax_method('/querydefult','','post',querydefultsucc)
+}
+function querydefultsucc(response){
+	//console.log(response);
+	document.getElementById("msg").innerHTML = response;
+	document.getElementById("msg").value=response;
+}
+function querysucc(response){
+	document.getElementById("msg").innerHTML = response;
+}
+
+function save(){
+var msg=document.getElementById("msg");
+//alert(msg.innerHTML);
+//alert(msg.value);
+msg=encodeURI(msg.value);//url编码
+msg=window.btoa(msg);//base64编码
+if(confirm("是否保存配置并启用？")){
+ajax_method('/save_config','jsonmsg='+msg,'post',succ);
+}
+}
+function succ(aa){
+//var ss={};
+
+//ss=JSON.parse(aa)
+alert(aa);
+}
+
+function ajax_method(url,data,method,success) {
+    // 异步对象
+    var ajax = new XMLHttpRequest();
+
+    // get 跟post  需要分别写不同的代码
+    if (method=='get') {
+        // get请求
+        if (data) {
+            // 如果有值
+            url+='?';
+            url+=data;
+        }else{
+
+        }
+        // 设置 方法 以及 url
+        ajax.open(method,url);
+
+        // send即可
+        ajax.send();
+    }else{
+        // post请求
+        // post请求 url 是不需要改变
+        ajax.open(method,url);
+
+        // 需要设置请求报文
+        ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+
+        // 判断data send发送数据
+        if (data) {
+            // 如果有值 从send发送
+            ajax.send(data);
+        }else{
+            // 木有值 直接发送即可
+            ajax.send();
+        }
+    }
+
+    // 注册事件
+    ajax.onreadystatechange = function () {
+        // 在事件中 获取数据 并修改界面显示
+        if (ajax.readyState==4&&ajax.status==200) {
+            // console.log(ajax.responseText);
+
+            // 将 数据 让 外面可以使用
+            // return ajax.responseText;
+
+            // 当 onreadystatechange 调用时 说明 数据回来了
+            // ajax.responseText;
+
+            // 如果说 外面可以传入一个 function 作为参数 success
+            success(ajax.responseText);
+        }
+    }
+
+}
+</script>
+  </body>
+</html>
